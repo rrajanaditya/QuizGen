@@ -111,7 +111,10 @@ def generateQuizFromFile():
     filename = secure_filename(file.filename)
     filePath = pathlib.Path(app.config['UPLOAD_FOLDER']) / filename
     file.save(filePath)
-    model_query = ContentExtractor(filePath).get_model_query_pdf()
+    if filename.endswith(".pdf"):
+        model_query = ContentExtractor(filePath).get_model_query_pdf()
+    else:
+        model_query = ContentExtractor().get_model_query_text(open(filePath,'r').read())
     quiz_data = GeminiQuizModel().get_quiz_data(model_query)
     os.remove(filePath)
     return jsonify(quiz_data), 200
