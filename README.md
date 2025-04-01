@@ -116,6 +116,19 @@ QuizGen enhances student learning by providing an efficient and interactive way 
 - Interactive multiple-choice quizzes help students be engaged and help with retention.
 - Displays whether selected answers are correct, allowing students to learn from mistakes instantly.
 
+# Demo
+
+## The main user interface
+![Main UI](demo/main-ui.png)
+
+## Generating from notes
+![Generating from notes](demo/fromnotes.png)
+
+## Generating from files
+![Generating from files](demo/fromfile.png)
+
+## Generated Questions with Correct or Incorrect Display
+![Generated Questions](demo/generated.png)
 
 ## License
 
