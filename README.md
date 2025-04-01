@@ -40,7 +40,7 @@ QuizGen is a web application that allows users to generate quiz questions based 
    ```
 3. Run the Flask server:
    ```sh
-   python app.py
+   python main.py
    ```
 
 ## API Endpoints
