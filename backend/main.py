@@ -11,6 +11,7 @@ import json
 from flask import Flask, request, jsonify
 from werkzeug.utils import secure_filename
 import os
+from flask_cors import CORS, cross_origin
 
 class ContentExtractor:
     def __init__(self, file_name= None):
@@ -54,6 +55,7 @@ class ContentExtractor:
         model_query += "Use the above data to give me few revision quiz questions along with multi choice answers"
         return model_query
 class QuizQuestion(BaseModel):
+    id: int
     question: str
     answers: list[str]
     correctAnswerIndex: int
@@ -76,7 +78,11 @@ class GeminiQuizModel:
 UPLOAD_FOLDER = 'assets/'
 ALLOWED_EXTENSIONS = {'txt', 'pdf'}
 app = Flask(__name__)
+cors = CORS(app)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['CORS_HEADERS'] = 'Content-Type'
+
+
 if not os.path.exists(UPLOAD_FOLDER):
     os.mkdir(UPLOAD_FOLDER)
 
@@ -84,6 +90,7 @@ def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 @app.route('/generatefromnotes', methods=['POST'])
+@cross_origin()
 def generateQuizFromNotes():
     if 'notes' not in request.form:
         return jsonify({ 'error': 'Note text required for processing.' }), 400
@@ -92,6 +99,7 @@ def generateQuizFromNotes():
     return jsonify(quiz_data), 200
 
 @app.route('/generatefromfile', methods=['POST'])
+@cross_origin()
 def generateQuizFromFile():
     if 'file' not in request.files:
         return jsonify({ 'error': 'File required for processing.' }), 400
