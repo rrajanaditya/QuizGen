@@ -72,12 +72,17 @@ class GeminiQuizModel:
             },
         )
         return json.loads(response.text)
+    
 UPLOAD_FOLDER = 'assets/'
 ALLOWED_EXTENSIONS = {'txt', 'pdf'}
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+if not os.path.exists(UPLOAD_FOLDER):
+    os.mkdir(UPLOAD_FOLDER)
+
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
 @app.route('/generatefromnotes', methods=['POST'])
 def generateQuizFromNotes():
     if 'notes' not in request.form:
@@ -85,6 +90,7 @@ def generateQuizFromNotes():
     model_query = ContentExtractor().get_model_query_text(request.form['notes'])
     quiz_data = GeminiQuizModel().get_quiz_data(model_query)
     return jsonify(quiz_data), 200
+
 @app.route('/generatefromfile', methods=['POST'])
 def generateQuizFromFile():
     if 'file' not in request.files:
@@ -101,4 +107,5 @@ def generateQuizFromFile():
     quiz_data = GeminiQuizModel().get_quiz_data(model_query)
     os.remove(filePath)
     return jsonify(quiz_data), 200
-app.run(port=5000)
+if __name__ == "__main__":
+    app.run(port=5000)
