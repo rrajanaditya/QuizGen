@@ -107,6 +107,7 @@ QuizGen is a web application that allows users to generate quiz questions based 
 - Parse the files and extract more meaningfull text using NLP techniques.
 - Add authentication for API usage.
 - Support additional file formats.
+- Add feedback and hints if wrong answer is selected to give students additional information to try again.
 
 ## How it Improves Student Life
 
