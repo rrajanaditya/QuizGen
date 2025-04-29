@@ -42,7 +42,11 @@ QuizGen is a web application that allows users to generate quiz questions based 
    ```sh
    python main.py
    ```
-
+4. You need a configuration file named .env in the backend folder with the following
+   ```sh
+   GEMINI_API_KEY=<YOUR_API_KEY_HERE>
+   MODEL_NAME=gemini-2.0-flash #(or any other model you want to use)
+   ```
 ## API Endpoints
 
 ### 1. Generate from Notes
